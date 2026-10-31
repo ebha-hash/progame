@@ -49,8 +49,6 @@ dragging = False
 
 pygame.display.update()
 
-pos = None
-
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -64,19 +62,6 @@ while True:
                    dragging = True
                    break
         pygame.display.update()       
-        '''pos2 = pygame.mouse.get_pos()
-        pygame.draw.circle(screen, (0, 0, 0), (pos2), 20, 0)
-        if pos == None:
-            pos = pos2
-        else:
-
-            if (pos[1] <= 300 and pos2[1] <= 700) or (pos[1] <= 500 and pos2[1] <= 300) or (pos[1] <= 700 and pos2[1] <= 500):
-                colour = (0, 210, 0)
-            else:
-                colour = (210, 0, 0)
-            pygame.draw.line(screen, colour, (pos), (pos2), 5)
-        pygame.display.update()
-        #screen.fill((255, 255, 255))'''
     if event.type == pygame.MOUSEBUTTONUP:
         if event.button == 1 and dragging:
             endpos = event.pos
@@ -88,9 +73,9 @@ while True:
                         break
 
             if correct:
-                colour = (0, 210, 0)
+                colour = (0, 255, 0)
             else:
-                colour = (210, 0, 0)
+                colour = (0, 0, 255)
 
             pygame.draw.line(screen, colour, startpos, endpos, 5)
 
