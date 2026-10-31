@@ -34,28 +34,68 @@ screen.blit(wand, (500, 250))
 screen.blit(bow, (500, 450))
 screen.blit(sword, (500, 650))
 
+ninjaR = pygame.Rect(200, 250, 100, 50)
+wizardR = pygame.Rect(200, 450, 100, 50)
+archerR = pygame.Rect(200, 650, 100, 50)
+wandR = pygame.Rect(500, 250, 50, 50)
+bowR = pygame.Rect(500, 450, 50, 50)
+swordR = pygame.Rect(500, 650, 50, 50)
+
+images = [(ninjaR, swordR), (wizardR, wandR), (archerR, bowR)]
+
+startpos = None
+endpos = None
+dragging = False
+
 pygame.display.update()
 
 pos = None
 
 while True:
-    event = pygame.event.poll()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
     if event.type == pygame.MOUSEBUTTONDOWN:
-        pos = pygame.mouse.get_pos()
-        pygame.draw.circle(screen, (0, 0, 0), (pos), 20, 0)
-        pygame.display.update()
-    elif event.type == pygame.MOUSEBUTTONUP:
-        pos2 = pygame.mouse.get_pos()
-        if pos is not None:
-            
-            if (pos[1] < 300 and pos[1] < 700) or (pos[1] < 500 and pos[1] < 300) or (pos[1] < 700 and pos[1] < 500):
+        if event.button == 1:
+           pos = event.pos
+           for i,w in images:
+               if i.collidepoint(pos):
+                   startpos = i.center
+                   dragging = True
+                   break
+        pygame.display.update()       
+        '''pos2 = pygame.mouse.get_pos()
+        pygame.draw.circle(screen, (0, 0, 0), (pos2), 20, 0)
+        if pos == None:
+            pos = pos2
+        else:
+
+            if (pos[1] <= 300 and pos2[1] <= 700) or (pos[1] <= 500 and pos2[1] <= 300) or (pos[1] <= 700 and pos2[1] <= 500):
                 colour = (0, 210, 0)
             else:
-                colour = (210, 0, 0)    
+                colour = (210, 0, 0)
             pygame.draw.line(screen, colour, (pos), (pos2), 5)
-            pygame.draw.circle(screen, colour, (pos2), 20, 0)
         pygame.display.update()
-        pos = None
-        #screen.fill((255, 255, 255))
+        #screen.fill((255, 255, 255))'''
+    if event.type == pygame.MOUSEBUTTONUP:
+        if event.button == 1 and dragging:
+            endpos = event.pos
+            correct = False
+            for i,w in images:
+                if i.collidepoint(startpos):
+                    if w.collidepoint(endpos):
+                        correct = True
+                        break
 
+            if correct:
+                colour = (0, 210, 0)
+            else:
+                colour = (210, 0, 0)
 
+            pygame.draw.line(screen, colour, startpos, endpos, 5)
+
+            pygame.display.update()
+
+            dragging = False
+            startpos = None
+            endpos = None
