@@ -49,26 +49,28 @@ dragging = False
 
 pygame.display.update()
 
-while True:
+running = True
+startrect = None
+
+while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            pygame.quit()
+            running = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 pos = event.pos
                 for i,w in images:
                     if i.collidepoint(pos):
                         startpos = i.center
+                        startrect = i
                         dragging = True
-                        break
-        pygame.display.update()       
+                        break     
         if event.type == pygame.MOUSEBUTTONUP:
             if event.button == 1 and dragging:
                 endpos = event.pos
                 correct = False
                 for i,w in images:
-                    if i.collidepoint(startpos):
-                        if w.collidepoint(endpos):
+                   if i == startrect and w.collidepoint(endpos):
                             correct = True
                             break
 
@@ -84,3 +86,6 @@ while True:
                 dragging = False
                 startpos = None
                 endpos = None
+
+        pygame.display.update()
+pygame.quit()        
