@@ -53,34 +53,34 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
-    if event.type == pygame.MOUSEBUTTONDOWN:
-        if event.button == 1:
-           pos = event.pos
-           for i,w in images:
-               if i.collidepoint(pos):
-                   startpos = i.center
-                   dragging = True
-                   break
-        pygame.display.update()       
-    if event.type == pygame.MOUSEBUTTONUP:
-        if event.button == 1 and dragging:
-            endpos = event.pos
-            correct = False
-            for i,w in images:
-                if i.collidepoint(startpos):
-                    if w.collidepoint(endpos):
-                        correct = True
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.button == 1:
+                pos = event.pos
+                for i,w in images:
+                    if i.collidepoint(pos):
+                        startpos = i.center
+                        dragging = True
                         break
+        pygame.display.update()       
+        if event.type == pygame.MOUSEBUTTONUP:
+            if event.button == 1 and dragging:
+                endpos = event.pos
+                correct = False
+                for i,w in images:
+                    if i.collidepoint(startpos):
+                        if w.collidepoint(endpos):
+                            correct = True
+                            break
 
-            if correct:
-                colour = (0, 255, 0)
-            else:
-                colour = (0, 0, 255)
+                if correct:
+                    colour = (0, 255, 0)
+                else:
+                    colour = (0, 0, 255)
 
-            pygame.draw.line(screen, colour, startpos, endpos, 5)
+                pygame.draw.line(screen, colour, startpos, endpos, 5)
 
-            pygame.display.update()
+                pygame.display.update()
 
-            dragging = False
-            startpos = None
-            endpos = None
+                dragging = False
+                startpos = None
+                endpos = None
