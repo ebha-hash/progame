@@ -19,6 +19,8 @@ space = pygame.image.load(i2)
 ast = pygame.image.load(i3)
 star = pygame.image.load(i4)
 
+running = True
+
 rocketw, rocketh = rocket.get_size()
 astw, asth = ast.get_size()
 starw, starh = star.get_size()
@@ -34,7 +36,7 @@ stary = -100
 
 keys = [False, False, False, False]
 
-while rockety < 900:
+while rockety < 900 and running == True:
     screen.blit(space, (0, 0))
     screen.blit(rocket, (rocketx, rockety))
     screen.blit(ast,(astx, asty))
@@ -51,14 +53,14 @@ while rockety < 900:
 
     if stary > HEIGHT:
         stary - 100
-        starx = random.randint(0,650)
+        starx = random.randint(0, 650)
 
     rocketrect = pygame.Rect(rocketx,rockety,rocketw,rocketh)
     astrect = pygame.Rect(astx, asty, astw, asth)
     starrect = pygame.Rect(starx, stary, starw, starh)
 
     if rocketrect.colliderect(astrect):
-        tunning = False
+        running = False
     if rocketrect.colliderect(starrect):
         rockety -= 75
 
@@ -99,3 +101,4 @@ while rockety < 900:
 
     rockety += 3
     time.sleep(0.05)
+pygame.quit()
